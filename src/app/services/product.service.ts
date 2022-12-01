@@ -38,6 +38,15 @@ export class ProductService {
     )
   }
 
+  // observable: JSON data can be converted directly to Product object
+  getProduct(productId: number): Observable<Product> {
+
+    // need to build URL based on product id
+    const productUrlId = `${this.productUrl}/${productId}`;
+
+    return this.httpClient.get<Product>(productUrlId);
+  }
+
   getProductCategories(): Observable<ProductCategory[]> {
     return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
       map(response => response._embedded.productCategory)
