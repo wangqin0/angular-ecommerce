@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Product} from "../../common/product";
 import {ProductService} from "../../services/product.service";
 import {ActivatedRoute} from "@angular/router";
+import {CartService} from "../../services/cart.service";
+import {CartItem} from "../../common/cart-item";
 
 @Component({
   selector: 'app-product-list',
@@ -26,7 +28,9 @@ export class ProductListComponent implements OnInit {
 
   previousKeyword: string = "";
 
+  // injecting service here
   constructor(private productService: ProductService,
+              private cartService: CartService,
               private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -103,4 +107,10 @@ export class ProductListComponent implements OnInit {
     }
   }
 
+  addToCart(product: Product) {
+    console.log(`Adding to cart from list view: ${product.name}, ${product.unitPrice}`)
+
+    const newCartItem = new CartItem(product);
+    this.cartService.addToCart(newCartItem);
+  }
 }
