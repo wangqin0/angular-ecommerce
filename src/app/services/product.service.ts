@@ -19,9 +19,15 @@ export class ProductService {
 
   getProductList(categoryId: number): Observable<Product[]> {
 
-    // DONE: need to build URL based on category id
-    const endpoint = `${this.productUrl}/search/findByCategoryId?id=${categoryId}`;
-    return this.getProducts(endpoint);
+    // Build url with category id
+    const url = `${this.productUrl}/search/findByCategoryId?id=${categoryId}`;
+    return this.getProducts(url);
+  }
+
+  getProductListPaginate(pageNum: number, pageSize: number, categoryId: number): Observable<GetResponseProducts>{
+    // Build url with category id, pageNum & size
+    const url = `${this.productUrl}/search/findByCategoryId?id=${categoryId}&page=${pageNum}&size=${pageSize}`;
+    return this.httpClient.get<GetResponseProducts>(url);
   }
 
   searchProducts(keyword: string): Observable<Product[]> {
@@ -57,6 +63,12 @@ export class ProductService {
 interface GetResponseProducts {
   _embedded: {
     products: Product[];
+  },
+  page: {
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
   }
 }
 
