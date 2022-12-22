@@ -65,4 +65,23 @@ export class CartService {
       console.log(`[logCartData]   name=${cartItem.product.name}, unitPrice=${cartItem.product.unitPrice}, quantity=${cartItem.quantity}`);
     }
   }
+
+  decrementQuantity(cartItem: CartItem) {
+    cartItem.quantity--;
+    if (cartItem.quantity === 0) {
+      this.removeCartItem(cartItem);
+    } else {
+      this.computeCartTotal();
+    }
+  }
+
+  removeCartItem(toRemove: CartItem) {
+    const i = this.cartItems.findIndex( cartItem => cartItem.product.id === toRemove.product.id );
+    if (i >= 0) {
+      this.cartItems.splice(i, 1);
+      this.computeCartTotal();
+    } else {
+      console.error(`[removeCartItem] i=${ i } is negative!`)
+    }
+  }
 }
