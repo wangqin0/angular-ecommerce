@@ -24,6 +24,8 @@ export class ProductListComponent implements OnInit {
   // no totalPages here (from Spring Data REST
   maxPageSelect = 6;
 
+  previousKeyword: string = "";
+
   constructor(private productService: ProductService,
               private activatedRoute: ActivatedRoute) {}
 
@@ -46,12 +48,16 @@ export class ProductListComponent implements OnInit {
   handleSearchProducts() {
     const keyword: string = this.activatedRoute.snapshot.paramMap.get('keyword')!;
 
+    // if we have a different keyword than previous, set pageNum to 1
+    if (this.previousKeyword != keyword) {
+      this.pageNum = 1;
+    }
+    this.previousKeyword = keyword;
+
+    console.log(`keyword=${keyword}, pageNum=${this.pageNum}`);
+
     // new search for the products using keyword
-    this.productService.searchProducts(keyword).subscribe(
-      data => {
-        this.products = data;
-      }
-    );
+    this.productService.searchProductsPaginate(keyword, this.pageNum - 1, this.pageSize).subscribe(this.processResultPaginate());
   }
 
   handleListProducts() {
@@ -76,15 +82,7 @@ export class ProductListComponent implements OnInit {
     this.previousCategoryId = this.currentCategoryId;
     console.log(`currentCategoryId=${this.currentCategoryId}, pageNum=${this.pageNum}`);
 
-    this.productService.getProductListPaginate(this.pageNum - 1, this.pageSize, this.currentCategoryId).subscribe(
-        data => {
-          this.products = data._embedded.products;
-
-          this.pageSize = data.page.size;
-          this.totalElements = data.page.totalElements;
-          this.pageNum = data.page.number + 1;
-        }
-    )
+    this.productService.getProductListPaginate(this.pageNum - 1, this.pageSize, this.currentCategoryId).subscribe(this.processResultPaginate())
   }
 
   updatePageSize(pageSize: string) {
@@ -92,6 +90,17 @@ export class ProductListComponent implements OnInit {
     this.pageNum = 1;
     // reload list
     this.listProducts();
+  }
+
+  private processResultPaginate() {
+    // take a json response and map to the class
+    return (data: any) => {
+      this.products = data._embedded.products;
+
+      this.pageSize = data.page.size;
+      this.totalElements = data.page.totalElements;
+      this.pageNum = data.page.number + 1;
+    }
   }
 
 }
