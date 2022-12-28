@@ -17,7 +17,7 @@
                                 <!-- dirty: user changed field value -->
                                 <!-- touched: field losing focus -->
                                 <div *ngIf="firstName!.invalid! && (firstName!.dirty! || firstName!.touched!)" class="alert alert-danger">
-                                    <div *ngIf="firstName!.errors!['required']">First Name is required</div>
+                                    <div *ngIf="firstName!.errors!['required'] || firstName!.errors!['allWhiteSpace']">First Name is required</div>
                                     <div *ngIf="firstName!.errors!['minlength']">First Name must be at lease 2 characters long</div>
                                 </div>
 
@@ -32,7 +32,7 @@
                                 <input formControlName="lastName" type="text"/>
 
                                 <div *ngIf="lastName!.invalid! && (lastName!.dirty! || lastName!.touched!)" class="alert alert-danger">
-                                    <div *ngIf="lastName!.errors!['required']">Last Name is required</div>
+                                    <div *ngIf="lastName!.errors!['required'] || firstName!.errors!['allWhiteSpace']">Last Name is required</div>
                                     <div *ngIf="lastName!.errors!['minlength']">Last Name must be at lease 2 characters long</div>
                                 </div>
 
