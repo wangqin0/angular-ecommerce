@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {FormOptionService} from "../../services/form-option.service";
 import {Country} from "../../common/country";
 import {State} from "../../common/state";
@@ -31,9 +31,10 @@ export class CheckoutComponent implements OnInit {
 
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: [''],
-        lastName: [''],
-        email: [''],
+        // new FormControl(<initialValue>, <validators>, ...)
+        firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        email: new FormControl('', [Validators.required, Validators.email]),  // maybe too lenient
       }),
       shippingAddress: this.formBuilder.group({
         street: [''],
@@ -75,8 +76,27 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
+  get firstName() {
+    return this.checkoutFormGroup.get('customer.firstName');
+  }
+
+  get lastName() {
+    return this.checkoutFormGroup.get('customer.lastName');
+  }
+
+  get email() {
+    return this.checkoutFormGroup.get('customer.email');
+  }
+
   onSubmit() {
     console.log("[onSubmit]");
+
+
+
+    if (this.checkoutFormGroup.invalid) {
+      this.checkoutFormGroup.markAllAsTouched();
+    }
+
     console.log(this.checkoutFormGroup.get('customer')?.value!);
     console.log(this.checkoutFormGroup.get('shippingAddress')?.value!);
     console.log(this.checkoutFormGroup.get('billingAddress')?.value!);
