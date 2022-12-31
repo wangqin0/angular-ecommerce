@@ -30,7 +30,14 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/@okta/okta-signin-widget/dist/css/okta-sign-in.min.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "@babel/runtime-corejs3",
+              "cross-fetch",
+              "p-cancelable",
+              "tiny-emitter",
+              "@okta/okta-signin-widget"
+            ]
           },
           "configurations": {
             "production": {
