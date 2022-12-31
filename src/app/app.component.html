@@ -2,9 +2,9 @@
 
   <!-- MENU SIDEBAR-->
   <aside class="menu-sidebar d-none d-lg-block">
-    <div class="logo">
-      <a routerLink="/products">
-        <img src="assets/images/logo.png" alt="luv2shop" class="img-responsive">
+    <div class="logo" style="vertical-align: center">
+      <a routerLink="/products" style="margin-left: auto; margin-right: auto">
+        <img src="assets/images/logo.png" alt="Wang Qin's Shop" class="img-responsive" style="max-height: 75px">
       </a>
     </div>
 
@@ -35,7 +35,10 @@
       <div class="section-content section-content-p30">
         <div class="container-fluid">
           <div class="header-wrap">
+
             <app-search></app-search>
+
+            <app-login-status></app-login-status>
 
 <!--replaced by <app-search>-->
 <!--            <form class="form-header" onsubmit="return false;" method="GET">-->
@@ -53,6 +56,7 @@
 <!--                   aria-hidden="true"></i>-->
 <!--              </a>-->
 <!--            </div>-->
+
           </div>
           <div class="account-wrap"></div>
         </div>
