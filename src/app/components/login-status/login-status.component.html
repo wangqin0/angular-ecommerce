@@ -7,4 +7,8 @@
 
     <button *ngIf="isAuthenticated" (click)="logout()" class="security-btn">Logout</button>
 
+    <button routerLink="/members" class="security-btn">Member</button>
+<!--    if want to hide before login:-->
+<!--    <button *ngIf="isAuthenticated" routerLink="/members" class="security-btn">Member</button>-->
+
 </div>
