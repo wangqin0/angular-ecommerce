@@ -10,8 +10,8 @@ import {map} from "rxjs/operators";
 })
 export class FormOptionService {
 
-  private countriesUrl = 'http://localhost:8080/api/countries';
-  private statesUrl = 'http://localhost:8080/api/states';
+  private countriesUrl = 'http://129.159.46.95:8080/api/countries';
+  private statesUrl = 'http://129.159.46.95:8080/api/states';
 
   constructor(private httpClient: HttpClient) { }
 

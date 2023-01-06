@@ -18,7 +18,7 @@ export class AuthInterceptorService implements HttpInterceptor {
   private async handleAccess(req: HttpRequest<any>, next: HttpHandler) {
 
     // Only add an access token for secured endpoints
-    const securedEndpoints = ['http://localhost:8080/api/orders'];
+    const securedEndpoints = ['http://129.159.46.95:8080/api/orders'];
 
     if (securedEndpoints.some(url => req.urlWithParams.includes(url))) {
 
