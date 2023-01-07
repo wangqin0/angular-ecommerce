@@ -4,14 +4,15 @@ import {HttpClient} from "@angular/common/http";
 import {Country} from "../common/country";
 import {State} from "../common/state";
 import {map} from "rxjs/operators";
+import {environment} from "../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormOptionService {
 
-  private countriesUrl = 'http://localhost:8080/api/countries';
-  private statesUrl = 'http://localhost:8080/api/states';
+  private countriesUrl = environment.backendUrl + '/countries';
+  private statesUrl = environment.backendUrl + '/states';
 
   constructor(private httpClient: HttpClient) { }
 
