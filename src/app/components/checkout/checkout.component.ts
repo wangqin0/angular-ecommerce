@@ -21,6 +21,7 @@ import {PaymentInfo} from "../../common/payment-info";
     styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
+
     checkoutFormGroup: FormGroup = this.formBuilder.group(1);
 
     totalPrice: number = 0;
@@ -42,6 +43,8 @@ export class CheckoutComponent implements OnInit {
     // paymentInfo: PaymentInfo = new PaymentInfo();
     cardElement: any;
     displayError: any = '';
+
+    checkoutButtonDisabled: boolean = false;
 
     constructor(private formBuilder: FormBuilder,
                 private formOptionService: FormOptionService,
@@ -253,6 +256,8 @@ export class CheckoutComponent implements OnInit {
             return;
         }
 
+        this.checkoutButtonDisabled = true;
+        console.log("  checkout button disabled");
         // if valid form then
         // - create payment intent
         // - confirm card payment
@@ -280,6 +285,7 @@ export class CheckoutComponent implements OnInit {
                         if (result.error) {
                             // inform the customer there was an error
                             alert(`There was an error: ${result.error.message}`);
+                            this.checkoutButtonDisabled = false;
                         } else {
                             // call REST API via the CheckoutService
                             this.checkoutService.placeOrder(purchase).subscribe({
@@ -288,9 +294,11 @@ export class CheckoutComponent implements OnInit {
 
                                     // reset cart
                                     this.resetCart();
+                                    this.checkoutButtonDisabled = false;
                                 },
                                 error: (err: any) => {
                                     alert(`There was an error: ${err.message}`);
+                                    this.checkoutButtonDisabled = false;
                                 }
                             })
                         }
@@ -298,9 +306,6 @@ export class CheckoutComponent implements OnInit {
             }
         );
         // ----- end Stripe payment info -----
-
-        // checkout complete, clear cart
-
 
         console.log("");
     }
