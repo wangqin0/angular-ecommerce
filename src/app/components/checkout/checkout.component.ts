@@ -248,7 +248,7 @@ export class CheckoutComponent implements OnInit {
         // this.paymentInfo.amount = this.totalPrice * 100;
         // this.paymentInfo.currency = "USD";
         const roundedAmount = Math.round(this.totalPrice * 100);
-        const paymentInfo = new PaymentInfo(roundedAmount, "USD");
+        const paymentInfo = new PaymentInfo(roundedAmount, "USD", purchase.customer.email);
         console.log(`  paymentInfo.amount: ${ paymentInfo.amount }`)
 
         if (this.checkoutFormGroup.invalid || this.displayError.textContent !== "") {
